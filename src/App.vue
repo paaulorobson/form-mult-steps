@@ -151,7 +151,12 @@ export default {
     return {
       currentstep: 0,
       tipoPessoa: 'pf',
-      steps: [],
+      steps: [ 
+        { step: 1 }, 
+        { step: 2 }, 
+        { step: 3 }, 
+        { step: 4 }
+      ],
       formData: {
         email: '',
         pessoaFisica: {
@@ -181,20 +186,10 @@ export default {
     },
   },
 
-  created() {
-    this.steps = [
-      { step: 1 }, 
-      { step: 2 }, 
-      { step: 3 }, 
-      { step: 4 }
-    ]
-  },
-
   methods: {
     nextStep() {
       if (!this.isLastIndex) {
         this.currentstep += 1
-        console.log('DADOS', this.formData)
       }
     },
 
