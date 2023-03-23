@@ -88,48 +88,52 @@
         </template>
         <!-- STEP 4 -->
         <template v-if="currentstep === 3">
-          <h2>Revise suas informações</h2>
+          <h2 class="form__title">Revise suas informações</h2>
 
           <div class="form__field">
             <label>Endereço de e-mail</label>
             <input type="text" v-model="formData.email" />
 
-            <div v-if="tipoPessoa === 'pf'">
-              <label>Nome</label>
-              <input type="text" v-model="formData.pessoaFisica.nome" />
+            <template v-if="tipoPessoa === 'pf'">
+              <div class="form__field">
+                <label>Nome</label>
+                <input type="text" v-model="formData.pessoaFisica.nome" />
 
-              <label>CPF</label>
-              <input type="text" v-model="formData.pessoaFisica.cpf" />
+                <label>CPF</label>
+                <input type="text" v-model="formData.pessoaFisica.cpf" />
 
-              <label>Data de nascimento</label>
-              <input
-                type="text"
-                v-model="formData.pessoaFisica.dataNascimento"
-              />
+                <label>Data de nascimento</label>
+                <input
+                  type="text"
+                  v-model="formData.pessoaFisica.dataNascimento"
+                />
 
-              <label>Telefone</label>
-              <input type="text" v-model="formData.pessoaFisica.telefone" />
-            </div>
+                <label>Telefone</label>
+                <input type="text" v-model="formData.pessoaFisica.telefone" />
+              </div>
+            </template>
 
-            <div v-if="tipoPessoa === 'pj'">
-              <label>Razão social</label>
-              <input
-                type="text"
-                v-model="formData.pessoaJuridica.razaoSocial"
-              />
+            <template v-if="tipoPessoa === 'pj'">
+              <div class="form__field">
+                <label>Razão social</label>
+                <input
+                  type="text"
+                  v-model="formData.pessoaJuridica.razaoSocial"
+                />
 
-              <label>CNPJ</label>
-              <input type="text" v-model="formData.pessoaJuridica.cnpj" />
+                <label>CNPJ</label>
+                <input type="text" v-model="formData.pessoaJuridica.cnpj" />
 
-              <label>Data de abertura</label>
-              <input
-                type="text"
-                v-model="formData.pessoaJuridica.dataAbertura"
-              />
+                <label>Data de abertura</label>
+                <input
+                  type="text"
+                  v-model="formData.pessoaJuridica.dataAbertura"
+                />
 
-              <label>Telefone</label>
-              <input type="text" v-model="formData.pessoaJuridica.telefone" />
-            </div>
+                <label>Telefone</label>
+                <input type="text" v-model="formData.pessoaJuridica.telefone" />
+              </div>
+            </template>
 
             <label>Senha</label>
             <input type="text" v-model="formData.senhaAcesso" />
