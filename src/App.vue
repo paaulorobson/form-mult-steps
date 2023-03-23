@@ -5,7 +5,10 @@
         <span
           v-for="(item, index) in steps"
           :key="index"
-          :class="{ 'stepper__item--active': currentstep === index }"
+          :class="{
+            ['stepper__item']: true, 
+            ['stepper__item--active']: currentstep === index
+          }"
         >
           {{ item.step }}
         </span>
@@ -17,65 +20,68 @@
       <form>
         <!-- STEP 1-->
         <template v-if="currentstep === 0">
-          <h2>Seja bem vindo(a)</h2>
-          <div class="form__row">
+          <h2 class="form__title">Seja bem vindo(a)</h2>
+          <div class="form__content">
             <div class="form__field">
               <label for="email">Endereço de e-mail</label>
               <input id="email" v-model="formData.email" type="text" />
 
-              <div class="form__radio-row">
-                <div>
+              <div class="form__radio-button">
+                <label>
                   <input type="radio" id="pf" v-model="tipoPessoa" value="pf" />
-                  <label for="pf">Pessoa física</label>
-                </div>
+                  Pessoa física
+                </label>
 
-                <div>
+                <label>
                   <input type="radio" id="pj" v-model="tipoPessoa" value="pj" />
-                  <label for="pj">Pessoa jurídica</label>
-                </div>
+                  Pessoa jurídica
+                </label>
               </div>
             </div>
           </div>
         </template>
         <!-- STEP 2-->
         <template v-if="currentstep === 1">
-          <div v-if="tipoPessoa === 'pf'">
-            <h2>Pessoa Física</h2>
+          <div v-if="tipoPessoa === 'pf'" class="form__content">
+            <h2 class="form__title">Pessoa Física</h2>
 
-            <label>Nome</label>
-            <input type="text" v-model="formData.pessoaFisica.nome" />
+            <div class="form__field">
+              <label>Nome</label>
+              <input type="text" v-model="formData.pessoaFisica.nome" />
 
-            <label>CPF</label>
-            <input type="text" v-model="formData.pessoaFisica.cpf" />
+              <label>CPF</label>
+              <input type="text" v-model="formData.pessoaFisica.cpf" />
 
-            <label>Data de nascimento</label>
-            <input type="text" v-model="formData.pessoaFisica.dataNascimento" />
+              <label>Data de nascimento</label>
+              <input type="text" v-model="formData.pessoaFisica.dataNascimento" />
 
-            <label>Telefone</label>
-            <input type="text" v-model="formData.pessoaFisica.telefone" />
+              <label>Telefone</label>
+              <input type="text" v-model="formData.pessoaFisica.telefone" />
+            </div>
           </div>
 
           <div v-if="tipoPessoa === 'pj'">
-            <h2>Pessoa Jurídica</h2>
+            <h2 class="form__title">Pessoa Jurídica</h2>
+            <div class="form__field">
+              <label>Razão social</label>
+              <input type="text" v-model="formData.pessoaJuridica.razaoSocial" />
 
-            <label>Razão social</label>
-            <input type="text" v-model="formData.pessoaJuridica.razaoSocial" />
+              <label>CNPJ</label>
+              <input type="text" v-model="formData.pessoaJuridica.cnpj" />
 
-            <label>CNPJ</label>
-            <input type="text" v-model="formData.pessoaJuridica.cnpj" />
+              <label>Data de abertura</label>
+              <input type="text" v-model="formData.pessoaJuridica.dataAbertura" />
 
-            <label>Data de abertura</label>
-            <input type="text" v-model="formData.pessoaJuridica.dataAbertura" />
-
-            <label>Telefone</label>
-            <input type="text" v-model="formData.pessoaJuridica.telefone" />
+              <label>Telefone</label>
+              <input type="text" v-model="formData.pessoaJuridica.telefone" />
+            </div>
           </div>
         </template>
         <!-- STEP 3 -->
         <template v-if="currentstep === 2">
-          <h2>Senha de acesso</h2>
+          <h2 class="form__title">Senha de acesso</h2>
 
-          <div>
+          <div class="form__field">
             <label>Sua senha</label>
             <input type="text" v-model="formData.senhaAcesso" />
           </div>
@@ -84,7 +90,7 @@
         <template v-if="currentstep === 3">
           <h2>Revise suas informações</h2>
 
-          <div>
+          <div class="form__field">
             <label>Endereço de e-mail</label>
             <input type="text" v-model="formData.email" />
 
@@ -130,10 +136,10 @@
           </div>
         </template>
       </form>
-      <button @click="submitForm">Enviar dados</button>
+      
       <div class="page__footer">
         <button v-if="currentstep !== 0" @click="prevStep">Voltar</button>
-        <button @click="nextStep">Avancar</button>
+        <button @click="nextStep" class="btn-primary">Continuar</button>
       </div>
     </section>
   </div>
@@ -221,6 +227,11 @@ export default {
   color: #333;
 }
 
+.page__content {
+  width: 100%;
+  max-width: 500px;
+}
+
 .page__header {
   width: 100%;
   height: 60px;
@@ -236,25 +247,36 @@ export default {
   align-items: center;
   gap: 38px;
 }
+
+.stepper__item {
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
 .stepper__item--active {
-  color: #e9af0e;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  background-color: #EE9605;
+  color: #fff;
+  font-size: 2rem;
 }
 
 .divider {
   margin: 1rem 0;
 }
 
-form {
-  width: 100%;
+.form__content {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 5px;
 }
 
-.form__row {
-  width: 100%;
-  display: flex;
-  gap: 18px;
+.form__title {
+  text-align: left;
+  margin-bottom: 1rem;
 }
 
 .form__field {
@@ -264,22 +286,23 @@ form {
   gap: 8px;
 }
 
-.form__radio-row {
+.form__radio-button {
   display: flex;
   align-items: center;
 }
 
-.form__radio-row div {
+.form__radio-button label {
   display: flex;
   align-items: center;
+  justify-content: space-around;
 }
 
-.form__field label {
+.form__content label {
   font-size: 0.8rem;
   color: rgba(0, 0, 0, 0.75);
 }
-.form__field input,
-.form__field select {
+
+.form__field input {
   width: 100%;
   background: #fafafa;
   border: 1px solid #ededed;
@@ -289,10 +312,11 @@ form {
   font-size: 1rem;
   outline: none;
 }
-.form__field input:focus,
-.form__field select:focus {
-  border-color: #e9af0e;
+
+.form__field input:focus {
+  border-color: #EE9605;
 }
+
 .form__field-error {
   font-size: 0.7rem;
   color: red;
@@ -304,24 +328,27 @@ form {
   height: 48px;
   display: flex;
   justify-content: space-between;
-  padding-left: 18px;
-  padding-right: 18px;
 }
+
 .page__footer button {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent;
-  border: 1px solid #cecece;
+  border: 1px solid #EE9605;
   font-size: 1rem;
-  color: #9e9e9e;
+  color: #EE9605;
   padding: 12px;
   max-height: 32px;
   border-radius: 4px;
   cursor: pointer;
 }
+
 .page__footer button.btn-primary {
-  border-color: #e9af0e;
+  background-color: #EE9605;
+  border-color: #EE9605;
   color: #fff;
+  margin-left: 1rem;
 }
 </style>
