@@ -289,12 +289,17 @@ export default {
 .form__radio-button {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .form__radio-button label {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  margin: 0 1rem 0 0;
+}
+
+.form__radio-button input {
+  margin-right: .3rem;
 }
 
 .form__content label {
@@ -303,7 +308,6 @@ export default {
 }
 
 .form__field input {
-  width: 100%;
   background: #fafafa;
   border: 1px solid #ededed;
   color: #333;
