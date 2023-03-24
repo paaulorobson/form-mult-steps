@@ -17,14 +17,15 @@
     <section class="page__content">
       <hr class="divider" />
 
-      <form>
+      <Form :validation-schema="schema" v-slot="{errors}">
         <!-- STEP 1-->
         <template v-if="currentStep === 0">
           <h2 class="form__title">Seja bem vindo(a)</h2>
           <div class="form__content">
             <div class="form__field">
               <label for="email">Endereço de e-mail</label>
-              <input id="email" v-model="formData.email" type="text" />
+              <Field name="email" id="email" v-model="formData.email" type="text" :class="{'form__error': errors.email}"/>
+              <ErrorMessage name="email" class="form__field-error"/>
 
               <div class="form__radio-button">
                 <label>
@@ -139,7 +140,7 @@
             <input type="text" v-model="formData.senhaAcesso" />
           </div>
         </template>
-      </form>
+      </Form>
       
       <div class="page__footer">
         <button v-if="currentStep !== 0" @click="prevStep">Voltar</button>
@@ -150,9 +151,24 @@
 </template>
 
 <script>
+import { Field, Form, ErrorMessage } from 'vee-validate';
+import * as yup from 'yup';
+
 export default {
+  components: {
+    Field,
+    // eslint-disable-next-line vue/no-reserved-component-names
+    Form,
+    ErrorMessage
+  },
+
   data() {
+    const schema = yup.object({
+      email: yup.string().required('Campo é Obrigatorio').email('Não é um e-mail válido'),
+    });
+
     return {
+      schema,
       currentStep: 0,
       tipoPessoa: 'pf',
       steps: [ 
@@ -320,6 +336,10 @@ export default {
 
 .form__field input:focus {
   border-color: #EE9605;
+}
+
+.form__error {
+  border: 1px solid red!important;
 }
 
 .form__field-error {
