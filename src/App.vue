@@ -7,7 +7,7 @@
           :key="index"
           :class="{
             ['stepper__item']: true, 
-            ['stepper__item--active']: currentstep === index
+            ['stepper__item--active']: currentStep === index
           }"
         >
           {{ item.step }}
@@ -19,7 +19,7 @@
 
       <form>
         <!-- STEP 1-->
-        <template v-if="currentstep === 0">
+        <template v-if="currentStep === 0">
           <h2 class="form__title">Seja bem vindo(a)</h2>
           <div class="form__content">
             <div class="form__field">
@@ -41,7 +41,7 @@
           </div>
         </template>
         <!-- STEP 2-->
-        <template v-if="currentstep === 1">
+        <template v-if="currentStep === 1">
           <div v-if="tipoPessoa === 'pf'" class="form__content">
             <h2 class="form__title">Pessoa Física</h2>
 
@@ -78,7 +78,7 @@
           </div>
         </template>
         <!-- STEP 3 -->
-        <template v-if="currentstep === 2">
+        <template v-if="currentStep === 2">
           <h2 class="form__title">Senha de acesso</h2>
 
           <div class="form__field">
@@ -87,7 +87,7 @@
           </div>
         </template>
         <!-- STEP 4 -->
-        <template v-if="currentstep === 3">
+        <template v-if="currentStep === 3">
           <h2 class="form__title">Revise suas informações</h2>
 
           <div class="form__field">
@@ -142,8 +142,8 @@
       </form>
       
       <div class="page__footer">
-        <button v-if="currentstep !== 0" @click="prevStep">Voltar</button>
-        <button @click="nextStep" class="btn-primary">Continuar</button>
+        <button v-if="currentStep !== 0" @click="prevStep">Voltar</button>
+        <button @click="nextStep" class="btn-primary">{{`${currentStep === 3 ? 'Cadastrar' : 'Continuar'}`}}</button>
       </div>
     </section>
   </div>
@@ -153,7 +153,7 @@
 export default {
   data() {
     return {
-      currentstep: 0,
+      currentStep: 0,
       tipoPessoa: 'pf',
       steps: [ 
         { step: 1 }, 
@@ -182,24 +182,26 @@ export default {
 
   computed: {
     isFirstIndex() {
-      return this.currentstep === 0
+      return this.currentStep === 0
     },
 
     isLastIndex() {
-      return this.currentstep === this.steps.length - 1
+      return this.currentStep === this.steps.length - 1
     },
   },
 
   methods: {
     nextStep() {
       if (!this.isLastIndex) {
-        this.currentstep += 1
+        this.currentStep += 1
+      } else if (this.currentStep === 3){
+        this.submitForm()
       }
     },
 
     prevStep() {
       if (!this.isFirstIndex) {
-        this.currentstep -= 1
+        this.currentStep -= 1
       }
     },
 
